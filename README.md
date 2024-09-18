@@ -1,3 +1,8 @@
 
-![openart-image_l7i-WMCN_1726653541842_raw](https://github.com/user-attachments/assets/208fde60-6a4f-439d-9fdd-e618109836a7)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/6c2faeef-e2d0-4309-83e0-0abbd66c64cd" alt="Image description" />
+</p>
+
 Reference URL: https://www.slideshare.net/slideshow/secret-detection-securecodetrack-using-truffelhog/271871120
+
+
