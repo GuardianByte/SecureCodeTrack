@@ -12,27 +12,23 @@ import demoji
 import re
 import io
 
-# Jira settings
 JIRA_URL = "https://jira.atlassian.net"
 JIRA_USERNAME = "JIRA User name"
-JIRA_PASSWORD = "JIRA Token"  # For Jira Cloud use a token generated here: https://id.atlassian.com/manage/api-tokens
+JIRA_PASSWORD = "JIRA Token" 
 JIRA_PROJECT_KEY = "project key"
 JIRA_ISSUE_TYPE = "issue type"
 
 def jira_rest_call(data):
-    # Set the root JIRA URL, and encode the username and password
+
     url = JIRA_URL + '/rest/api/2/issue'
     base64string = base64.b64encode(f'{JIRA_USERNAME}:{JIRA_PASSWORD}'.encode()).decode().replace('\n', '')
 
-    # Build the request
-    restreq = Request(url, data.encode())  # Data needs to be encoded
+    restreq = Request(url, data.encode()) 
     restreq.add_header('Content-Type', 'application/json')
     restreq.add_header("Authorization", "Basic %s" % base64string)
 
     try:
-        # Send the request and grab JSON response
         response = urlopen(restreq)
-        # Load into a JSON object and return that to the calling function
         return json.loads(response.read())
     except URLError as e:
         print(f"Failed to reach the server: {e.reason}")
@@ -44,11 +40,10 @@ def generate_summary(file_name):
     return'['+(file_name).split('/')[-1]+ '] Hardcoded creds Found'
     
 def generate_description(data):
-    # Prepend "Hello World" and append "5 issues found" to the description
     return "Sensitive Hardcoded Credetials found\n" 
 
 def generate_issue_data(summary, description):
-    # Build the JSON to post to JIRA
+
     json_data = json.dumps({
         "fields": {
             "project": {
@@ -63,8 +58,6 @@ def generate_issue_data(summary, description):
     })
     return json_data
 
-
-# Calling attchement functionpip
 
 def add_attchement(issueIdOrKey, file_name):
 
@@ -93,7 +86,7 @@ def assign_issue(issue_id , assignee_id):
     url = JIRA_URL + "/rest/api/3/issue/" + issue_id + "/assignee"
     payload = json.dumps(
         {
-            "accountId": assignee_id  # or use "name": user_id if that's the correct field for user identifier
+            "accountId": assignee_id  
         }
         
     )
@@ -148,7 +141,7 @@ def txt_formatter():
         with open(f, 'r', encoding='utf-8') as file:
             lines = file.readlines()
         
-        if len(lines) <= 6:  # Check if the file is empty or has just one line
+        if len(lines) <= 6: 
             #print(f'Skipping file {f} ... ({counter}/{total})')
             counter += 1
             continue
@@ -157,7 +150,7 @@ def txt_formatter():
         #print(f'Processing file {f}... ({counter}/{len(files)})')
         
         cleaned_data = []
-        detector_type_found = False  # Flag to check if "Detector Type" is found
+        detector_type_found = False 
         
         for line in lines:
             # Skip the line if it starts with a numeric value
